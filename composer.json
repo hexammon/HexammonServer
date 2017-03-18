@@ -1,0 +1,34 @@
+{
+    "name": "free-elephants/hexo-nards-game-server",
+    "type": "project",
+    "authors": [
+        {
+            "name": "samizdam",
+            "email": "samizdam@inbox.ru"
+        }
+    ],
+    "require": {
+        "free-elephants/hexo-nards": "1.0.0-alpha",
+        "cboden/ratchet": "^0.3.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7",
+        "ratchet/pawl": "^0.2.3"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/FreeElephants/HexoNards"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "FreeElephants\\HexoNardsGameServer\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FreeElephants\\HexoNardsGameServerTests\\": "tests/"
+        }
+    }
+}
