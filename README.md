@@ -1,6 +1,11 @@
 # Hexo-Nards Game Server
  
-Game Server implementation is web-socket server. 
+Game Server implementation consists of 2 parts: 
+- Web-socket server for game events and players interaction: useful in all event-driven cases.
+- REST API for receiving data (like statistic) and authorization: useful in data-driven cases and request-response logic. 
+
+## Web-socket server
+
 All messages based on player actions or game related events. Messages are JSON. Common format is:
 
 ```json
@@ -12,29 +17,68 @@ All messages based on player actions or game related events. Messages are JSON. 
 }
 ```
 
-Server provide next routes:
+All wss-routes prefixed with `/wss/v1`. Server provide next routes:
 
-## `/rooms`
+### `/rooms`
 
 This channel provide events about new games.   
 
-### Client messages: 
-#### Init new room.
+#### Client messages: 
+##### InitNewRoom
 
 ```json
 {
     "eventType": "InitNewRoom",
     "eventData": {
-        "numberOfPlayers": 2, 
+        "numberOfPlayers": 2,
         "boardType": "<hex|square>",
         "boardSize": 8, // e.g. 8x8
     }
 }
 ```
 
-## `/rooms/<roomId>`
- 
-### Server messages:
+##### RoomsListRequest
+
+```json
+{
+    "eventType": "RoomsListRequest",
+    "eventData": {
+        "numberOfPlayers": 2, // optional, can be undefined for include without limit by players 
+        "boardType": "<hex|square>", // optional, can be undefined for include without limit by board
+        "boardSize": 8, // e.g. 8x8, optional, can be undefined for include without limit by players 
+    }
+}
+```
+
+##### JoinToRoom
+
+
+#### Server messages:
+
+##### RoomsListResponse
+
+```json
+{
+    "eventType": "RoomsListRequest",
+    "eventData": {
+        "rooms": [
+            {
+                "numberOfPlayers": 2,
+                "boardType": "<hex|square>",
+                "boardSize": 8, // e.g. 8x8
+                "players": [
+                    {
+                        "id": "<playerId>",
+                        "login": "<playerLogin>",
+                        "color": "#FFFFFF"
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
+
 
 #### Player joined to room
 
@@ -42,19 +86,21 @@ This channel provide events about new games.
 {
     "eventType": "PlayerJoinedToRoom",
     "eventData": {
-        "playerId": "<playerId>"
+        "roomId": "<roomId>",
+        "playerId": "<playerId>",
+        "playerColor": "#FFFFFF" // RGB color of player
     }
 }
 ```
  
 
-#### Room is filled (game is begin)
+#### Room filled (game is begin)
 
 ```json
 {
-    "eventType": "RoomIsFilled",
+    "eventType": "RoomFilled",
     "eventData": {
-        "gameId": "<gameId>" // id of new game
+        "gameId": "<gameId>" // id of new game, connect to its channel (see below)
     }
 }
 ```
@@ -77,11 +123,11 @@ This channel provide all events in game, like player actions.
 ```
 
 
-#### BaseCastle
+#### BuildCastle
 
 ```json
 {
-    "eventType": "BaseCastle",
+    "eventType": "BuildCastle",
     "eventData": {
         "tileCoordinate": "<tileCoordinate>" // coordinate of tile in "1-1" format, where first number is row, and second is column, started from 1.   
     }
@@ -106,16 +152,18 @@ This channel provide all events in game, like player actions.
 {
     "eventType": "MoveArmy",
     "eventData": {
-        // TBD
+        "sourceTileCoordinate": "<tileCoordinate>",
+        "targetTileCoordinate": "<tileCoordinate>",
+        "units": 10 // number of units for movement
     }
 }
 ```
 
-#### ReplenishArmy
+#### ReplenishGarrison
 
 ```json
 {
-    "eventType": "ReplenishArmy",
+    "eventType": "ReplenishGarrison",
     "eventData": {
         "tileCoordinate": "<tileCoordinate>"
     }
@@ -126,9 +174,9 @@ This channel provide all events in game, like player actions.
 
 ```json
 {
-    "eventType": "",
+    "eventType": "TakeOffEnemyGarrison",
     "eventData": {
-        // TBD
+        "tileCoordinate": "<tileCoordinate>"
     }
 }
 ```
@@ -142,7 +190,13 @@ Send when previous player make all moves, and active player switched.
 {
     "eventType": "SwitchActivePlayer",
     "eventData": {
-        "activePlayer": "<playerId>"
+        "activePlayerId": "<playerId>"
     }
 }
 ```
+
+## REST API (auth service and statistic data)
+
+All REST routes prefixed with `/api/v1`. REST API provide next routes: 
+
+...TBD...
