@@ -6,16 +6,46 @@ Game Server implementation consists of 2 parts:
 
 ## Web-socket server
 
-All messages based on player actions or game related events. Messages are JSON. Common format is:
+All messages based on player actions or game related events. Messages are JSON. Common format for client messages is:
 
 ```json
 {
+    "authKey": "<authKey>", 
     "eventType": "<eventName>",
     "eventData": {
         // fields with event data
     }
 }
 ```
+
+Common format for server messages is:
+```json
+{
+    "initiator": "<player>", 
+    "eventType": "<eventName>",
+    "eventData": {
+        // fields with event data
+    }
+}
+```
+
+### `/auth`
+
+Channel for authentication related actions. 
+
+#### Client events
+
+```json
+{
+    "initiator": "<player>", 
+    "eventType": "<eventName>",
+    "eventData": {
+        // fields with event data
+    }
+}
+```
+
+
 
 All wss-routes prefixed with `/wss/v1`. Server provide next routes:
 
@@ -24,11 +54,12 @@ All wss-routes prefixed with `/wss/v1`. Server provide next routes:
 This channel provide events about new games.   
 
 #### Client messages: 
-##### InitNewRoom
+
+##### CreateNewRoom
 
 ```json
 {
-    "eventType": "InitNewRoom",
+    "eventType": "CreateNewRoom",
     "eventData": {
         "numberOfPlayers": 2,
         "boardType": "<hex|square>",
@@ -80,21 +111,23 @@ This channel provide events about new games.
 ```
 
 
-#### Player joined to room
+##### PlayerJoinedToRoom
 
 ```json
 {
     "eventType": "PlayerJoinedToRoom",
     "eventData": {
         "roomId": "<roomId>",
-        "playerId": "<playerId>",
-        "playerColor": "#FFFFFF" // RGB color of player
+        "player": {
+            "id": "<playerId>",
+            "login": "<playerLogin",
+            "color": "#FFFFFF" // RGB color of player
+        }
     }
 }
 ```
- 
 
-#### Room filled (game is begin)
+##### RoomFilled (game is begin)
 
 ```json
 {
@@ -105,13 +138,27 @@ This channel provide events about new games.
 }
 ```
  
-## `/game/<gameId>`
+##### NewRoomCreated
+ 
+```json
+{
+    "eventType": "NewRoomCreated",
+    "eventData": {
+        "roomId": "<roomId>",
+        "numberOfPlayers": 2,
+        "boardType": "<hex|square>",
+        "boardSize": 8, // e.g. 8x8
+    }
+}
+```
+ 
+### `/game/<gameId>`
 
 This channel provide all events in game, like player actions. 
 
-### Client messages: 
+#### Client messages: 
 
-#### AssaultCastle
+##### AssaultCastle
 
 ```json
 {
@@ -123,7 +170,7 @@ This channel provide all events in game, like player actions.
 ```
 
 
-#### BuildCastle
+##### BuildCastle
 
 ```json
 {
@@ -135,7 +182,7 @@ This channel provide all events in game, like player actions.
 ```
 
 
-#### MergeArmy
+##### MergeArmy
 
 ```json
 {
@@ -146,7 +193,7 @@ This channel provide all events in game, like player actions.
 }
 ```
 
-#### MoveArmy
+##### MoveArmy
 
 ```json
 {
@@ -159,7 +206,7 @@ This channel provide all events in game, like player actions.
 }
 ```
 
-#### ReplenishGarrison
+##### ReplenishGarrison
 
 ```json
 {
@@ -170,7 +217,7 @@ This channel provide all events in game, like player actions.
 }
 ```
 
-#### TakeOffEnemyGarrison
+##### TakeOffEnemyGarrison
 
 ```json
 {
@@ -181,10 +228,10 @@ This channel provide all events in game, like player actions.
 }
 ```
 
-### Server messages:
+#### Server messages:
 Server re-send all client messages to every player in game as is. Client must update board state with action from other players. 
 
-#### SwitchActivePlayer
+##### SwitchActivePlayer
 Send when previous player make all moves, and active player switched.  
 ```json
 {
@@ -195,7 +242,7 @@ Send when previous player make all moves, and active player switched.
 }
 ```
 
-## REST API (auth service and statistic data)
+### REST API (auth service and statistic data)
 
 All REST routes prefixed with `/api/v1`. REST API provide next routes: 
 
