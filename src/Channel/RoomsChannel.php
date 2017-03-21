@@ -1,6 +1,9 @@
 <?php
 namespace FreeElephants\HexoNardsGameServer\Channel;
 
+use FreeElephants\HexoNardsGameServer\Message\RoomsListResponse;
+use FreeElephants\HexoNardsGameServer\Model\Room\Room;
+use FreeElephants\HexoNardsGameServer\Model\Room\RoomRepository;
 use Ratchet\App;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
@@ -12,14 +15,14 @@ class RoomsChannel implements MessageComponentInterface
 {
     protected $clients;
     /**
-     * @var App
+     * @var RoomRepository
      */
-    private $app;
+    private $roomRepository;
 
-    public function __construct(App $app)
+    public function __construct(RoomRepository $roomRepository)
     {
         $this->clients = new \SplObjectStorage;
-        $this->app = $app;
+        $this->roomRepository = $roomRepository;
     }
 
     /**
@@ -63,6 +66,8 @@ class RoomsChannel implements MessageComponentInterface
      */
     function onMessage(ConnectionInterface $from, $msg)
     {
-        json_decode($msg);
+        $roomsList = $this->roomRepository->getRooms();
+        $response = new RoomsListResponse($roomsList);
+        $from->send($response->toString());
     }
 }

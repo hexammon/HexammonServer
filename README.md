@@ -90,7 +90,7 @@ This channel provide events about new games.
 
 ```json
 {
-    "eventType": "RoomsListRequest",
+    "eventType": "RoomsListResponse",
     "eventData": {
         "rooms": [
             {
@@ -224,6 +224,17 @@ This channel provide all events in game, like player actions.
     "eventType": "TakeOffEnemyGarrison",
     "eventData": {
         "tileCoordinate": "<tileCoordinate>"
+    }
+}
+```
+##### AttackEnemy
+
+```json
+{
+    "eventType": "AttackEnemy",
+    "eventData": {
+        "assaulterCoordinate": "<tileCoordinate>",
+        "attackedCoordinate": "<tileCoordinate>",
     }
 }
 ```
