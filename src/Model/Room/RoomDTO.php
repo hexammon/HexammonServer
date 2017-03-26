@@ -2,33 +2,26 @@
 
 namespace FreeElephants\HexoNardsGameServer\Model\Room;
 
+use FreeElephants\HexoNardsGameServer\Model\Board\BoardConfigDTO;
+use FreeElephants\HexoNardsGameServer\Model\Player\Player;
+use FreeElephants\HexoNardsGameServer\Model\Player\PlayerDTO;
+
 /**
  * @author samizdam <samizdam@inbox.ru>
  */
 class RoomDTO
 {
-    /**
-     * @var Room
-     */
-    private $room;
-
     public $numberOfPlayers;
 
-    public $boardType;
-
-    public $boardSize;
+    public $boardConfig;
 
     public $players;
 
     public function __construct(Room $room)
     {
         $this->numberOfPlayers = $room->getNumberOfPlayers();
-        // TODO hardcoded for test
-//        $this->boardType = $room->getBoard()->getType();
-        $this->boardType = 'hex';
-        // TODO hardcoded for test
-//        $this->boardSize = $room->getBoard()->getSize();
-        $this->boardSize = 8;
-        $this->players = $room->getPlayers();
-    }
+        $this->boardConfig = new BoardConfigDTO($room->getBoard());
+        $this->players = array_map(function(Player $player){
+            return new PlayerDTO($player);
+        }, $room->getPlayers());}
 }

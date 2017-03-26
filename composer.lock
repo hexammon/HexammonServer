@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9f74063fb3310a2f72d3c3aa6364a5b6",
-    "content-hash": "54cd28b444dd436476c1a41c3bc84e82",
+    "hash": "f9e760cd26689262192b16223c8acc7e",
+    "content-hash": "ae0999008cd52d0fb9b801592980cba5",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -142,16 +142,16 @@
         },
         {
             "name": "free-elephants/hexo-nards",
-            "version": "1.0.0-alpha",
+            "version": "dev-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FreeElephants/HexoNards.git",
-                "reference": "6b6f4140045f44ff993646e45ff5f55720a549f8"
+                "reference": "275354b93f00fda8cd1171468fdc2ff3f7785a2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FreeElephants/HexoNards/zipball/6b6f4140045f44ff993646e45ff5f55720a549f8",
-                "reference": "6b6f4140045f44ff993646e45ff5f55720a549f8",
+                "url": "https://api.github.com/repos/FreeElephants/HexoNards/zipball/275354b93f00fda8cd1171468fdc2ff3f7785a2d",
+                "reference": "275354b93f00fda8cd1171468fdc2ff3f7785a2d",
                 "shasum": ""
             },
             "require-dev": {
@@ -175,10 +175,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/FreeElephants/HexoNards/tree/1.0.0-alpha",
+                "source": "https://github.com/FreeElephants/HexoNards/tree/dev",
                 "issues": "https://github.com/FreeElephants/HexoNards/issues"
             },
-            "time": "2017-03-14 18:32:24"
+            "time": "2017-03-26 08:52:50"
         },
         {
             "name": "guzzle/common",
@@ -475,20 +475,23 @@
         },
         {
             "name": "react/promise",
-            "version": "v2.5.0",
+            "version": "v2.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/promise.git",
-                "reference": "2760f3898b7e931aa71153852dcd48a75c9b95db"
+                "reference": "62785ae604c8d69725d693eb370e1d67e94c4053"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/promise/zipball/2760f3898b7e931aa71153852dcd48a75c9b95db",
-                "reference": "2760f3898b7e931aa71153852dcd48a75c9b95db",
+                "url": "https://api.github.com/repos/reactphp/promise/zipball/62785ae604c8d69725d693eb370e1d67e94c4053",
+                "reference": "62785ae604c8d69725d693eb370e1d67e94c4053",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
             },
             "type": "library",
             "autoload": {
@@ -514,7 +517,7 @@
                 "promise",
                 "promises"
             ],
-            "time": "2016-12-22 14:09:01"
+            "time": "2017-03-25 12:08:31"
         },
         {
             "name": "react/socket",
@@ -907,16 +910,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855"
+                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/0d6c7ca039329247e4f0f8f8f6506810e8248855",
-                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
+                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
                 "shasum": ""
             },
             "require": {
@@ -968,7 +971,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-02-27 10:51:17"
+            "time": "2017-03-20 17:10:46"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2543,7 +2546,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "free-elephants/hexo-nards": 15
+        "free-elephants/hexo-nards": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

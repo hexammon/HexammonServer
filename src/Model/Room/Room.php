@@ -3,7 +3,7 @@
 namespace FreeElephants\HexoNardsGameServer\Model\Room;
 
 use FreeElephants\HexoNards\Board\Board;
-use FreeElephants\HexoNards\Game\Player;
+use FreeElephants\HexoNards\Game\PlayerInterface;
 
 /**
  * @author samizdam <samizdam@inbox.ru>
@@ -16,11 +16,11 @@ class Room
 
     private $players;
     /**
-     * @var Player
+     * @var PlayerInterface
      */
     private $owner;
 
-    public function __construct(int $numberOfPlayers, Board $board, Player $owner)
+    public function __construct(int $numberOfPlayers, Board $board, PlayerInterface $owner)
     {
         $this->numberOfPlayers = $numberOfPlayers;
         $this->board = $board;

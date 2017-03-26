@@ -2,11 +2,15 @@
 namespace FreeElephants\HexoNardsGameServerTests\Channel;
 
 use FreeElephants\HexoNards\Board\Board;
-use FreeElephants\HexoNards\Game\Player;
+use FreeElephants\HexoNards\Board\Column;
+use FreeElephants\HexoNards\Board\Row;
 use FreeElephants\HexoNardsGameServer\Channel\RoomsChannel;
+use FreeElephants\HexoNardsGameServer\Model\Player\Player;
 use FreeElephants\HexoNardsGameServer\Model\Room\Room;
 use FreeElephants\HexoNardsGameServer\Model\Room\RoomRepository;
+use FreeElephants\HexoNardsGameServer\Model\User\UserInterface;
 use FreeElephants\HexoNardsGameServerTests\AbstractTestCase;
+use FreeElephants\Phalette\RGB;
 use Ratchet\ConnectionInterface;
 
 /**
@@ -18,8 +22,17 @@ class RoomsChannelTest extends AbstractTestCase
     public function testRoomsListRequest_and_Response()
     {
         $roomRepository = $this->createMock(RoomRepository::class);
+        $board = $this->createMock(Board::class);
+        $board->method('getType')->willReturn('hex');
+        $rows = array_fill(1, 8, $this->createMock(Row::class));
+        $columns = array_fill(1, 8, $this->createMock(Column::class));
+        $board->method('getRows')->willReturn($rows);
+        $board->method('getColumns')->willReturn($columns);
+        $user = $this->createMock(UserInterface::class);
+        $user->method('getId')->willReturn(1);
+        $user->method('getLogin')->willReturn('foo');
         $roomRepository->method('getRooms')->willReturn([
-            new Room(2, new Board(), new Player())
+            new Room(2, $board, new Player($user, new RGB(0xFF, 0xFF, 0xFF)))
         ]);
         $channel = new RoomsChannel($roomRepository);
         $conn = $this->createMock(ConnectionInterface::class);
@@ -36,8 +49,11 @@ class RoomsChannelTest extends AbstractTestCase
         "rooms": [
             {
                 "numberOfPlayers": 2,
-                "boardType": "hex",
-                "boardSize": 8,
+                "boardConfig": {
+                    "type": "hex",
+                    "numberOfRows": 8, 
+                    "numberOfColumns": 8 
+                },
                 "players": [
                     {
                         "id": 1,

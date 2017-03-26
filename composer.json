@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "free-elephants/hexo-nards": "1.0.0-alpha",
+        "free-elephants/hexo-nards": "dev-dev",
         "cboden/ratchet": "^0.3.6",
         "free-elephants/di": "1.0.0"
     },
@@ -24,7 +24,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "FreeElephants\\HexoNardsGameServer\\": "src/"
+            "FreeElephants\\HexoNardsGameServer\\": "src/",
+            "FreeElephants\\Phallete\\": "src/Phalette/"
         }
     },
     "autoload-dev": {
