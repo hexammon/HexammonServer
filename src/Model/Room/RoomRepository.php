@@ -1,6 +1,6 @@
 <?php
 
-namespace FreeElephants\HexoNardsGameServer\Model\Room;
+namespace FreeElephants\HexammonServer\Model\Room;
 
 /**
  * @author samizdam <samizdam@inbox.ru>

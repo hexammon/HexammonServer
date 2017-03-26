@@ -1,10 +1,10 @@
 <?php
 
-namespace FreeElephants\HexoNardsGameServer\Model\Room;
+namespace FreeElephants\HexammonServer\Model\Room;
 
-use FreeElephants\HexoNardsGameServer\Model\Board\BoardConfigDTO;
-use FreeElephants\HexoNardsGameServer\Model\Player\Player;
-use FreeElephants\HexoNardsGameServer\Model\Player\PlayerDTO;
+use FreeElephants\HexammonServer\Model\Board\BoardConfigDTO;
+use FreeElephants\HexammonServer\Model\Player\Player;
+use FreeElephants\HexammonServer\Model\Player\PlayerDTO;
 
 /**
  * @author samizdam <samizdam@inbox.ru>

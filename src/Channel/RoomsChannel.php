@@ -1,10 +1,8 @@
 <?php
-namespace FreeElephants\HexoNardsGameServer\Channel;
+namespace FreeElephants\HexammonServer\Channel;
 
-use FreeElephants\HexoNardsGameServer\Message\RoomsListResponse;
-use FreeElephants\HexoNardsGameServer\Model\Room\Room;
-use FreeElephants\HexoNardsGameServer\Model\Room\RoomRepository;
-use Ratchet\App;
+use FreeElephants\HexammonServer\Message\RoomsListResponse;
+use FreeElephants\HexammonServer\Model\Room\RoomRepository;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace FreeElephants\HexoNardsGameServer\Model\Room;
+namespace FreeElephants\HexammonServer\Model\Room;
 
 use FreeElephants\HexoNards\Board\Board;
 use FreeElephants\HexoNards\Game\PlayerInterface;

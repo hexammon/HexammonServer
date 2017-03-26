@@ -1,9 +1,9 @@
 <?php
 
-namespace FreeElephants\HexoNardsGameServer\Message;
+namespace FreeElephants\HexammonServer\Message;
 
-use FreeElephants\HexoNardsGameServer\Model\Room\Room;
-use FreeElephants\HexoNardsGameServer\Model\Room\RoomDTO;
+use FreeElephants\HexammonServer\Model\Room\Room;
+use FreeElephants\HexammonServer\Model\Room\RoomDTO;
 
 /**
  * @author samizdam <samizdam@inbox.ru>

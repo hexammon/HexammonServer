@@ -1,15 +1,15 @@
 <?php
-namespace FreeElephants\HexoNardsGameServerTests\Channel;
+namespace FreeElephants\HexammonServerTests\Channel;
 
+use FreeElephants\HexammonServer\Channel\RoomsChannel;
+use FreeElephants\HexammonServer\Model\Player\Player;
+use FreeElephants\HexammonServer\Model\Room\Room;
+use FreeElephants\HexammonServer\Model\Room\RoomRepository;
+use FreeElephants\HexammonServer\Model\User\UserInterface;
+use FreeElephants\HexammonServerTests\AbstractTestCase;
 use FreeElephants\HexoNards\Board\Board;
 use FreeElephants\HexoNards\Board\Column;
 use FreeElephants\HexoNards\Board\Row;
-use FreeElephants\HexoNardsGameServer\Channel\RoomsChannel;
-use FreeElephants\HexoNardsGameServer\Model\Player\Player;
-use FreeElephants\HexoNardsGameServer\Model\Room\Room;
-use FreeElephants\HexoNardsGameServer\Model\Room\RoomRepository;
-use FreeElephants\HexoNardsGameServer\Model\User\UserInterface;
-use FreeElephants\HexoNardsGameServerTests\AbstractTestCase;
 use FreeElephants\Phalette\RGB;
 use Ratchet\ConnectionInterface;
 

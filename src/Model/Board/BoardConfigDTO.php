@@ -1,6 +1,6 @@
 <?php
 
-namespace FreeElephants\HexoNardsGameServer\Model\Board;
+namespace FreeElephants\HexammonServer\Model\Board;
 
 use FreeElephants\HexoNards\Board\Board;
 

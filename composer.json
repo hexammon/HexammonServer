@@ -24,13 +24,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "FreeElephants\\HexoNardsGameServer\\": "src/",
+            "FreeElephants\\HexammonServer\\": "src/",
             "FreeElephants\\Phallete\\": "src/Phalette/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "FreeElephants\\HexoNardsGameServerTests\\": "tests/unit/"
+            "FreeElephants\\HexammonServerTests\\": "tests/unit/"
         }
     }
 }

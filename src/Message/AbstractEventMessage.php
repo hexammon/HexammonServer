@@ -1,6 +1,6 @@
 <?php
 
-namespace FreeElephants\HexoNardsGameServer\Message;
+namespace FreeElephants\HexammonServer\Message;
 
 /**
  * @author samizdam <samizdam@inbox.ru>

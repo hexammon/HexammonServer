@@ -1,9 +1,9 @@
 <?php
 
-namespace FreeElephants\HexoNardsGameServer\Model\Player;
+namespace FreeElephants\HexammonServer\Model\Player;
 
+use FreeElephants\HexammonServer\Model\User\UserInterface;
 use FreeElephants\HexoNards\Game\PlayerInterface;
-use FreeElephants\HexoNardsGameServer\Model\User\UserInterface;
 use FreeElephants\HexoNardsGameServer\Phalette\ColorInterface;
 
 /**

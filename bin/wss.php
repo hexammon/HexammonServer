@@ -1,6 +1,6 @@
 <?php
 
-use FreeElephants\HexoNardsGameServer\Channel\RoomsChannel;
+use FreeElephants\HexammonServer\Channel\RoomsChannel;
 use Ratchet\App;
 
 require __DIR__ . '/../vendor/autoload.php';
