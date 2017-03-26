@@ -60,7 +60,6 @@ class RoomsChannel implements MessageComponentInterface
     function onOpen(ConnectionInterface $conn)
     {
         $this->clients->attach($conn);
-        $conn->send('{"welcome": true}');
     }
 
     /**

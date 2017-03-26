@@ -86,8 +86,12 @@ JSON;
         $roomRepository = new RoomRepository();
         $authClient = $this->buildAuthClientMock();
         $channel = new RoomsChannel($roomRepository, new ClientMessageFactory($authClient), new BoardBuilder(), $authClient);
+        $otherConn = $this->createMock(ConnectionInterface::class);
+        $otherConn->expects($otherConnSendSpy = $this->any())->method('send');
+        $channel->onOpen($otherConn);
         $conn = $this->createMock(ConnectionInterface::class);
-        $conn->expects($sendSpy = $this->any())->method('send');
+
+
         $requestData = /** @lang json */
 <<<JSON
 {
@@ -105,6 +109,30 @@ JSON;
 JSON;
         $channel->onMessage($conn, $requestData);
         $this->assertCount(1, $roomRepository);
+
+        $this->assertSame(1, $otherConnSendSpy->getInvocationCount());
+        $newRoomMsg = $otherConnSendSpy->getInvocations()[0]->parameters[0];
+        $expectedNewRoomMsg = <<<JSON
+{
+    "eventType": "NewRoomCreated",
+    "eventData": {
+        "numberOfPlayers": 2,
+        "boardConfig": {
+            "type": "hex",
+            "numberOfRows": 8,
+            "numberOfColumns": 8
+        },
+        "players": [
+            {
+                "id": "1",
+                "login": "foo",
+                "color": "#FFFFFF"
+            }
+        ]
+    }
+}
+JSON;
+        $this->assertJsonStringEqualsJsonString($expectedNewRoomMsg, $newRoomMsg);
     }
 
     /**
