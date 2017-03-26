@@ -2,13 +2,14 @@
 
 namespace FreeElephants\HexammonServer\Message;
 
+use FreeElephants\HexammonServer\Message\Server\AbstractServerMessage;
 use FreeElephants\HexammonServer\Model\Room\Room;
 use FreeElephants\HexammonServer\Model\Room\RoomDTO;
 
 /**
  * @author samizdam <samizdam@inbox.ru>
  */
-class RoomsListResponse extends AbstractEventMessage
+class RoomsListResponse extends AbstractServerMessage
 {
     /**
      * @var array
@@ -20,16 +21,13 @@ class RoomsListResponse extends AbstractEventMessage
         $this->rooms = $rooms;
     }
 
-    public function toString(): string
+    public function getEventData()
     {
         $data = [
-            'eventType' => $this->getEventType(),
-            'eventData' => [
-                'rooms' => array_map(function (Room $room) {
-                    return new RoomDTO($room);
-                }, $this->rooms)
-            ]
+            'rooms' => array_map(function (Room $room) {
+                return new RoomDTO($room);
+            }, $this->rooms)
         ];
-        return json_encode($data);
+        return $data;
     }
 }

@@ -62,8 +62,11 @@ This channel provide events about new games.
     "eventType": "CreateNewRoom",
     "eventData": {
         "numberOfPlayers": 2,
-        "boardType": "<hex|square>",
-        "boardSize": 8, // e.g. 8x8
+        "boardConfig": {
+            "type": "<hex|square>",
+            "numberOfRows": 8,
+            "numberOfColumns": 8
+        } 
     }
 }
 ```
@@ -74,9 +77,7 @@ This channel provide events about new games.
 {
     "eventType": "RoomsListRequest",
     "eventData": {
-        "numberOfPlayers": 2, // optional, can be undefined for include without limit by players 
-        "boardType": "<hex|square>", // optional, can be undefined for include without limit by board
-        "boardSize": 8, // e.g. 8x8, optional, can be undefined for include without limit by players 
+        // reserved for filtering
     }
 }
 ```
@@ -95,9 +96,12 @@ This channel provide events about new games.
         "rooms": [
             {
                 "numberOfPlayers": 2,
-                "boardType": "<hex|square>",
-                "boardSize": 8, // e.g. 8x8
-                "players": [
+                 "boardConfig": {
+                     "type": "<hex|square>",
+                     "numberOfRows": 8,
+                     "numberOfColumns": 8
+                 },
+                "players": [    // list of connected players
                     {
                         "id": "<playerId>",
                         "login": "<playerLogin>",
@@ -144,10 +148,19 @@ This channel provide events about new games.
 {
     "eventType": "NewRoomCreated",
     "eventData": {
-        "roomId": "<roomId>",
         "numberOfPlayers": 2,
-        "boardType": "<hex|square>",
-        "boardSize": 8, // e.g. 8x8
+        "boardConfig": {
+            "type": "<hex|square>",
+            "numberOfRows": 8,
+            "numberOfColumns": 8
+        },
+        "players": [    // list of connected players
+            {
+                "id": "<playerId>",
+                "login": "<playerLogin>",
+                "color": "#FFFFFF"
+            }
+        ]
     }
 }
 ```
