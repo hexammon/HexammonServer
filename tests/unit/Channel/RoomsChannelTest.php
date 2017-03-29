@@ -77,7 +77,7 @@ class RoomsChannelTest extends AbstractTestCase
 }
 JSON;
 
-        $roomsListMsg = $sendSpy->getInvocations()[0]->parameters[0];
+        $roomsListMsg = $this->getFirstInvocationFirstArgument($sendSpy);
         $this->assertJsonStringEqualsJsonString($expectedRoomsListJson, $roomsListMsg);
     }
 
@@ -92,7 +92,7 @@ JSON;
         $conn = $this->createMock(ConnectionInterface::class);
 
 
-        $requestData = /** @lang json */
+        $requestData =
 <<<JSON
 {
     "eventType": "CreateNewRoom",
@@ -111,7 +111,7 @@ JSON;
         $this->assertCount(1, $roomRepository);
 
         $this->assertSame(1, $otherConnSendSpy->getInvocationCount());
-        $newRoomMsg = $otherConnSendSpy->getInvocations()[0]->parameters[0];
+        $newRoomMsg = $this->getFirstInvocationFirstArgument($otherConnSendSpy);
         $expectedNewRoomMsg = <<<JSON
 {
     "eventType": "NewRoomCreated",

@@ -29,24 +29,6 @@ Common format for server messages is:
 }
 ```
 
-### `/auth`
-
-Channel for authentication related actions. 
-
-#### Client events
-
-```json
-{
-    "initiator": "<player>", 
-    "eventType": "<eventName>",
-    "eventData": {
-        // fields with event data
-    }
-}
-```
-
-
-
 All wss-routes prefixed with `/wss/v1`. Server provide next routes:
 
 ### `/rooms`
@@ -77,13 +59,14 @@ This channel provide events about new games.
 {
     "eventType": "RoomsListRequest",
     "eventData": {
-        // reserved for filtering
+        // reserved for filtering, allow be empty in current version
     }
 }
 ```
 
 ##### JoinToRoom
 
+For join to some room, client need connect to its channel, e.g. `/wss/v1/rooms/<roomId>`. 
 
 #### Server messages:
 
@@ -95,6 +78,8 @@ This channel provide events about new games.
     "eventData": {
         "rooms": [
             {
+                "id": "<roomId>",
+                "channel": "/wss/v1/rooms/<roomId>",
                 "numberOfPlayers": 2,
                  "boardConfig": {
                      "type": "<hex|square>",
@@ -114,14 +99,14 @@ This channel provide events about new games.
 }
 ```
 
-
 ##### PlayerJoinedToRoom
 
 ```json
 {
     "eventType": "PlayerJoinedToRoom",
     "eventData": {
-        "roomId": "<roomId>",
+        "id": "<roomId>",
+        "channel": "/wss/v1/rooms/<roomId>",
         "player": {
             "id": "<playerId>",
             "login": "<playerLogin",
@@ -137,7 +122,7 @@ This channel provide events about new games.
 {
     "eventType": "RoomFilled",
     "eventData": {
-        "gameId": "<gameId>" // id of new game, connect to its channel (see below)
+        "gameChannel": "/wss/v1/games/<gameId>" // channel of new game, connect to its channel (see below)
     }
 }
 ```
