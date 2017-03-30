@@ -4,14 +4,56 @@ Game Server implementation consists of 2 parts:
 - Web-socket server for game events and players interaction: useful in all event-driven cases.
 - REST API for receiving data (like statistic) and authorization: useful in data-driven cases and request-response logic. 
 
+## Common Object Types used in both API's
+
+Scalar values and complex objects present in current documentation in "<angle brackets>". E.g.:
+- `<int>`: integer value
+- `<string>`: string value
+- `<User>`: User object.
+- etc... 
+
+### <User>
+```json
+{
+    "id": "<int>",
+    "login": "<string>"
+}
+```
+
+### <Player>
+Player - it's User in game context. On User will be present as new Player in every games. Order in lists of Players corresponds with move order in game.    
+```json
+{
+    "user": "<User>",
+    "color": "#FFFFFF", // HTML RGB color of player pieces in game 
+}
+```
+
+### <Room>
+Room it's Game before start, when Users can join it as Players. Room close when all players assembled. 
+  
+```json
+{
+    "id": "<roomId>",
+    "channel": "/wss/v1/rooms/<roomId>",
+    "numberOfPlayers": 2,
+    "boardConfig": {
+        "type": "<hex|square>",
+        "numberOfRows": 8,
+        "numberOfColumns": 8
+    },
+    "players": "<Player>[]"    // list of connected players
+}
+```
+
 ## Web-socket server
 
 All messages based on player actions or game related events. Messages are JSON. Common format for client messages is:
 
 ```json
 {
-    "authKey": "<authKey>", 
-    "eventType": "<eventName>",
+    "authKey": "<string>", 
+    "eventType": "<string>",
     "eventData": {
         // fields with event data
     }
@@ -21,8 +63,8 @@ All messages based on player actions or game related events. Messages are JSON. 
 Common format for server messages is:
 ```json
 {
-    "initiator": "<player>", 
-    "eventType": "<eventName>",
+    "user": "<User>|null", // null if event does not triggered by user, e.g. from game server 
+    "eventType": "<string>",
     "eventData": {
         // fields with event data
     }
@@ -45,7 +87,7 @@ This channel provide events about new games.
     "eventData": {
         "numberOfPlayers": 2,
         "boardConfig": {
-            "type": "<hex|square>",
+            "type": "(hex|square)",
             "numberOfRows": 8,
             "numberOfColumns": 8
         } 
@@ -66,7 +108,7 @@ This channel provide events about new games.
 
 ##### JoinToRoom
 
-For join to some room, client need connect to its channel, e.g. `/wss/v1/rooms/<roomId>`. 
+For join to some room, client need open connection to its channel, e.g. `/wss/v1/rooms/<roomId>`. 
 
 #### Server messages:
 
@@ -76,25 +118,7 @@ For join to some room, client need connect to its channel, e.g. `/wss/v1/rooms/<
 {
     "eventType": "RoomsListResponse",
     "eventData": {
-        "rooms": [
-            {
-                "id": "<roomId>",
-                "channel": "/wss/v1/rooms/<roomId>",
-                "numberOfPlayers": 2,
-                 "boardConfig": {
-                     "type": "<hex|square>",
-                     "numberOfRows": 8,
-                     "numberOfColumns": 8
-                 },
-                "players": [    // list of connected players
-                    {
-                        "id": "<playerId>",
-                        "login": "<playerLogin>",
-                        "color": "#FFFFFF"
-                    }
-                ]
-            }
-        ]
+        "rooms": "<Rooms>[]"
     }
 }
 ```
@@ -107,11 +131,7 @@ For join to some room, client need connect to its channel, e.g. `/wss/v1/rooms/<
     "eventData": {
         "id": "<roomId>",
         "channel": "/wss/v1/rooms/<roomId>",
-        "player": {
-            "id": "<playerId>",
-            "login": "<playerLogin",
-            "color": "#FFFFFF" // RGB color of player
-        }
+        "player": "<Player>"
     }
 }
 ```
@@ -132,21 +152,7 @@ For join to some room, client need connect to its channel, e.g. `/wss/v1/rooms/<
 ```json
 {
     "eventType": "NewRoomCreated",
-    "eventData": {
-        "numberOfPlayers": 2,
-        "boardConfig": {
-            "type": "<hex|square>",
-            "numberOfRows": 8,
-            "numberOfColumns": 8
-        },
-        "players": [    // list of connected players
-            {
-                "id": "<playerId>",
-                "login": "<playerLogin>",
-                "color": "#FFFFFF"
-            }
-        ]
-    }
+    "eventData": "<Room>"
 }
 ```
  
@@ -246,7 +252,7 @@ Send when previous player make all moves, and active player switched.
 {
     "eventType": "SwitchActivePlayer",
     "eventData": {
-        "activePlayerId": "<playerId>"
+        "activePlayer": "<Player>"
     }
 }
 ```
