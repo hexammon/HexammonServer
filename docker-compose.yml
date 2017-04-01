@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  server:
+    container_name: server
+    ports:
+      - ${EXTERNAL_PORT}:9000
+    image: hexammon/server
+    build:
+      context: .
+      dockerfile: Dockerfile-server
+    command: ["./bin/wait-for-it.sh", "db:3306", "--", "php", "bin/game-server.php"]
+    links:
+      - db
+    env_file:
+      - ./env/server.env
+  db:
+    container_name: db
+    image: hexammon/db
+    build:
+      context: .
+      dockerfile: Dockerfile-db
+    env_file:
+      - ./env/db.env

@@ -18,10 +18,10 @@ foreach ($registeredBeans as $interface => $implementation) {
     $di->registerService($implementation, $interface);
 }
 
-$httpHost = $argv[1] ?? '127.0.0.1';
-$port = $argv[2] ?? 8080;
-$address = $argv[3] ?? '0.0.0.0';
-$origin = isset($argv[4]) ? explode(',', $argv[4]) : ['*'];
+$httpHost = $argv[1] ?? getenv('H6N_HOST') ?: '127.0.0.1';
+$port = $argv[2] ?? getenv('H6N_PORT') ?: 8080;
+$address = $argv[3] ?? getenv('H6N_ADDR') ?: '0.0.0.0';
+$origin = isset($argv[4]) ? explode(',', $argv[4]) : explode(',', getenv('H6N_ORIGIN')) ?: ['*'];
 
 $server = new RestServer($httpHost, $port, $address, $origin);
 $wssInjector = function (App $app, RestServer $server) use ($di, $origin) {

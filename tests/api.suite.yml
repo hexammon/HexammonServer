@@ -1,0 +1,23 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the WebDriver or PhpBrowser.
+# If you need both WebDriver and PHPBrowser tests - create a separate suite.
+
+class_name: ApiTester
+modules:
+    config:
+        Db:
+            dsn: 'mysql:host=hexammon-test;dbname=hexammon;charset=utf8'
+            user: 'root'
+            password: 'password'
+            dump: tests/_data/dump.sql
+    enabled:
+        - REST:
+            depends: PhpBrowser
+            part: Json
+        - PhpBrowser:
+            url: http://127.0.0.1:8080/api/v1
+            curl:
+              CURLOPT_TIMEOUT: 1
+        - Db

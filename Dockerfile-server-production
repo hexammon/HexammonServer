@@ -1,0 +1,6 @@
+FROM hexammon/server
+
+COPY bin/ /srv/hexammon/bin
+COPY config/ /srv/hexammon/config
+COPY src/ /srv/hexammon/src
+COPY vendor/ /srv/hexammon/vendor
