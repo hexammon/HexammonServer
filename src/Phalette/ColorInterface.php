@@ -1,6 +1,6 @@
 <?php
 
-namespace FreeElephants\HexoNardsGameServer\Phalette;
+namespace FreeElephants\Phalette;
 
 /**
  * @author samizdam <samizdam@inbox.ru>

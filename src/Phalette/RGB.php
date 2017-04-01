@@ -2,8 +2,6 @@
 
 namespace FreeElephants\Phalette;
 
-use FreeElephants\HexoNardsGameServer\Phalette\ColorInterface;
-
 /**
  * @author samizdam <samizdam@inbox.ru>
  */

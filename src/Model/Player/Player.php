@@ -4,7 +4,7 @@ namespace FreeElephants\HexammonServer\Model\Player;
 
 use FreeElephants\HexammonServer\Model\User\UserInterface;
 use FreeElephants\HexoNards\Game\PlayerInterface;
-use FreeElephants\HexoNardsGameServer\Phalette\ColorInterface;
+use FreeElephants\Phalette\ColorInterface;
 
 /**
  * @author samizdam <samizdam@inbox.ru>
