@@ -261,4 +261,65 @@ Send when previous player make all moves, and active player switched.
 
 All REST routes prefixed with `/api/v1`. REST API provide next routes: 
 
-...TBD...
+#### Auth Resource
+##### Create authKey with user credentials
+
+Request: 
+```
+POST: /api/v1/auth
+{
+    "login": <string>,
+    "password": <string>
+}
+```
+Response contains `Location` header with new generated authKey uri and it's content in body. 
+
+#### Get user by authKey
+Request: 
+`GET: /api/v1/auth/<authKey>`
+Response: 
+```
+{
+    "authKey": <authKey>,
+    "user": <User>
+}
+```
+Use HEAD method for check that authKey is valid. 
+
+### User Resource
+#### Create new user (registration)
+Request:
+```
+POST /api/v1/users
+{
+    "login": <string>,
+    "email": <string>,
+    "password": <string>,
+    "invite": <string>
+}
+```
+Error cases (TODO write test for this cases):
+- 400 some field not present (all is required).
+- 422 login or email already used.  
+
+#### Get Users Collection
+
+Request: `GET /api/v1/users`
+Service Authorization is required. 
+Response: 
+```
+{
+    "items": <User>[]
+}
+```
+
+## Get User by ID
+Request: `GET /api/v1/users/{userId}`
+Service Authorization is required. 
+Response: 
+```
+{
+    "id": <userId>,
+    "login": <string>
+}
+```
