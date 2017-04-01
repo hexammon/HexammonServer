@@ -2,20 +2,20 @@
 
 namespace FreeElephants\HexammonServer\Model\Player;
 
+use FreeElephants\HexammonServer\Model\User\UserDTO;
+
 /**
  * @author samizdam <samizdam@inbox.ru>
  */
 class PlayerDTO
 {
 
-    public $id;
-    public $login;
+    public $user;
     public $color;
 
     public function __construct(Player $player)
     {
-        $this->id = $player->getId();
-        $this->login = $player->getLogin();
+        $this->user = new UserDTO($player->getUser());
         $this->color = $player->getColor()->toHtmlString();
     }
 }

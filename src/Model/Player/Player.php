@@ -41,4 +41,9 @@ class Player implements PlayerInterface, UserInterface
     {
         return $this->color;
     }
+
+    public function getUser(): UserInterface
+    {
+        return $this->user;
+    }
 }

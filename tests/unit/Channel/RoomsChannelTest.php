@@ -66,8 +66,10 @@ class RoomsChannelTest extends AbstractTestCase
                 },
                 "players": [
                     {
-                        "id": 1,
-                        "login": "foo",
+                        "user": {
+                            "id": 1,
+                            "login": "foo"
+                        }, 
                         "color": "#FFFFFF"
                     }
                 ]
@@ -124,8 +126,10 @@ JSON;
         },
         "players": [
             {
-                "id": "1",
-                "login": "foo",
+                "user": {
+                    "id": 1,
+                    "login": "foo"
+                }, 
                 "color": "#FFFFFF"
             }
         ]
