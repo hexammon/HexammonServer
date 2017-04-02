@@ -8,9 +8,9 @@ class_name: ApiTester
 modules:
     config:
         Db:
-            dsn: 'mysql:host=hexammon-test;dbname=hexammon;charset=utf8'
-            user: 'root'
-            password: 'password'
+            dsn: 'mysql:host=db;dbname=hexammon;charset=utf8'
+            user: 'hexammon'
+            password: 'hexammon_password'
             dump: tests/_data/dump.sql
     enabled:
         - REST:

@@ -25,7 +25,7 @@
     "autoload": {
         "psr-4": {
             "FreeElephants\\HexammonServer\\": "src/",
-            "FreeElephants\\Phallete\\": "src/Phalette/"
+            "FreeElephants\\": "src/"
         }
     },
     "autoload-dev": {

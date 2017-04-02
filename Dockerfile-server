@@ -1,5 +1,7 @@
 FROM php:7.1.3-zts
 
+RUN docker-php-ext-install pdo_mysql
+
 WORKDIR /srv/hexammon
 
 CMD php bin/game-server.php
