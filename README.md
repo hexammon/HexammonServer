@@ -13,6 +13,7 @@ Scalar values and complex objects present in current documentation in "<angle br
 - etc... 
 
 ### <User>
+
 ```json
 {
     "id": "<int>",
@@ -21,7 +22,8 @@ Scalar values and complex objects present in current documentation in "<angle br
 ```
 
 ### <Player>
-Player - it's User in game context. On User will be present as new Player in every games. Order in lists of Players corresponds with move order in game.    
+
+Player - it's User in game context. One User will be present as new Player in every games. Order in lists of Players corresponds with move order in game.    
 ```json
 {
     "user": "<User>",
@@ -156,7 +158,7 @@ For join to some room, client need open connection to its channel, e.g. `/wss/v1
 }
 ```
  
-### `/game/<gameId>`
+### `/games/<gameId>`
 
 This channel provide all events in game, like player actions. 
 
@@ -231,6 +233,7 @@ This channel provide all events in game, like player actions.
     }
 }
 ```
+
 ##### AttackEnemy
 
 ```json
@@ -262,6 +265,7 @@ Send when previous player make all moves, and active player switched.
 All REST routes prefixed with `/api/v1`. REST API provide next routes: 
 
 #### Auth Resource
+
 ##### Create authKey with user credentials
 
 Request: 
@@ -287,6 +291,7 @@ Response:
 Use HEAD method for check that authKey is valid. 
 
 ### User Resource
+
 #### Create new user (registration)
 Request:
 ```
