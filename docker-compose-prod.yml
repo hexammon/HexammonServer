@@ -2,6 +2,10 @@ version: "3"
 
 services:
 
+  server:
+    env_file:
+      - ./env/server.env
+
   db:
     volumes:
       - ./var/lib/mysql:/var/lib/mysql

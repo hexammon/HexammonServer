@@ -4,4 +4,9 @@ services:
   server:
     volumes:
       - .:/srv/hexammon
+    environment:
+      - H6N_HOST=server
+      - H6N_PORT=9000
+      - H6N_ADDR=0.0.0.0
+      - H6N_ORIGIN=*
 

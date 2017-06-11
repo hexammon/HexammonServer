@@ -12,8 +12,6 @@ services:
     command: ["./bin/wait-for-it.sh", "db:3306", "--", "php", "bin/game-server.php"]
     links:
       - db
-    env_file:
-      - ./env/server.env
 
   db:
     container_name: db

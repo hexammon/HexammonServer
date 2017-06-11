@@ -4,6 +4,9 @@ services:
   server:
     volumes:
       - .:/srv/hexammon
+    server:
+      env_file:
+        - ./env/server.env
 
   db:
     volumes:
