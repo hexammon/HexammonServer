@@ -5,6 +5,3 @@ services:
     volumes:
       - .:/srv/hexammon
 
-  db:
-    volumes:
-      - ./var/lib/mysql:/var/lib/mysql

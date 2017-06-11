@@ -4,6 +4,20 @@ Game Server implementation consists of 2 parts:
 - Web-socket server for game events and players interaction: useful in all event-driven cases.
 - REST API for receiving data (like statistic) and authorization: useful in data-driven cases and request-response logic. 
 
+## Testing
+
+```bash
+./tools/prepare-local-config.sh
+docker-compose -f docker-compose.yml -f docker-compose-test.yml up -d
+docker exec server vendor/bin/codecept run
+```
+If you get next error on run codecept:
+```bash
+  [Codeception\Exception\ModuleException]
+  Db: SQLSTATE[HY000] [2002] Connection refused while creating PDO connection
+```
+Don't worry, it's ok - mysql server get long time on startup. Wait for it, and rerun tests. 
+
 ## Common Object Types used in both API's
 
 Scalar values and complex objects present in current documentation in "<angle brackets>". E.g.:

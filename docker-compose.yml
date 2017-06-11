@@ -14,15 +14,10 @@ services:
       - db
     env_file:
       - ./env/server.env
+
   db:
     container_name: db
-    image: hexammon/db
-    build:
-      context: .
-      dockerfile: Dockerfile-db
+    image: mysql:5.7.17
     command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
-    volumes:
-      - ./var/lib/mysql:/var/lib/mysql
     env_file:
       - ./env/db.env
-

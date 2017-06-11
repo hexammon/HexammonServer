@@ -1,10 +1,9 @@
 version: "3"
 
 services:
-  server:
-    volumes:
-      - .:/srv/hexammon
 
   db:
     volumes:
       - ./var/lib/mysql:/var/lib/mysql
+
+
