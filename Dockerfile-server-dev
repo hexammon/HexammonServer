@@ -1,0 +1,11 @@
+FROM php:7.1.3-zts
+
+RUN docker-php-ext-install pdo_mysql \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
+WORKDIR /srv/hexammon
+
+CMD php bin/game-server.php
+
+EXPOSE 9000

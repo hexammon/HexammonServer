@@ -5,10 +5,6 @@ services:
     container_name: server
     ports:
       - ${EXTERNAL_PORT}:9000
-    image: hexammon/server
-    build:
-      context: .
-      dockerfile: Dockerfile-server
     command: ["./bin/wait-for-it.sh", "db:3306", "--", "php", "bin/game-server.php"]
     links:
       - db

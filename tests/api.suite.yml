@@ -12,6 +12,7 @@ modules:
             user: 'hexammon'
             password: 'hexammon_password'
             dump: tests/_data/dump.sql
+            populate: true
     enabled:
         - REST:
             depends: PhpBrowser

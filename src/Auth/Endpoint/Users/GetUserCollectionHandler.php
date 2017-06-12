@@ -33,18 +33,12 @@ class GetUserCollectionHandler extends AbstractHandler
         ServerRequestInterface $request,
         ResponseInterface $response,
         callable $next
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         $authKey = $request->getHeaderLine('Authorization');
-        if (!empty($authKey) && $this->serviceAuthClient->isValidServiceAuthKey($authKey)) {
-            $consumerService = $this->serviceAuthClient->getService($authKey);
-            if ($consumerService->getName() === 'banking') {
-                $newResponse = $response->withStatus(200);
-                $users = $this->userRepository->getAll();
-                $newResponse->getBody()->write($this->serializeCollection($users, $request));
-            } else {
-                $newResponse = $response->withStatus(403);
-            }
+        if ($this->serviceAuthClient->isAuthKeyPresent($authKey)) {
+            $newResponse = $response->withStatus(200);
+            $users = $this->userRepository->getAll();
+            $newResponse->getBody()->write($this->serializeCollection($users, $request));
         } else {
             $newResponse = $response->withStatus(401);
         }

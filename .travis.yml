@@ -37,13 +37,15 @@ before_script:
   - until ./tools/mysql-is-up.sh; do printf .; sleep 1; done;
 
 script:
-  - vendor/bin/phpunit --coverage-clover=coverage.xml
+  - docker exec server ./vendor/bin/codecept run unit --coverage --coverage-xml
+  - docker exec server ./vendor/bin/codecept run -vvv api
 
 after_script:
   - docker-compose -f docker-compose.yml -f docker-compose-test.yml down
 
 after_success:
   # Coverage reporting
+  - cp tests/_output/coverage.xml ./coverage.xml
   - bash <(curl -s https://codecov.io/bash)
 
 cache:
