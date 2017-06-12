@@ -1,14 +1,4 @@
-sudo: true # required for docker
-
-services:
-  - docker
-
-language: php
-
-php:
-  - 7.0
-  - 7.1
-  - nightly
+sudo: required # for docker
 
 env:
   - "DOCKER_COMPOSE_VERSION=1.11.2"
@@ -19,6 +9,8 @@ matrix:
 
 before_install:
   - ./tools/prepare-local-config.sh
+  - sudo apt-get update
+  - curl -sSL https://get.docker.com/ | sudo sh
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
