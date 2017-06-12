@@ -10,16 +10,25 @@ php:
   - 7.1
   - nightly
 
+env:
+  - "DOCKER_COMPOSE_VERSION=1.4.2"
+
 matrix:
   allow_failures:
     - php: nightly
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
 
 install:
   - ./tools/composer.sh install
 
 before_script:
   - docker-compose -f docker-compose.yml -f docker-compose-test.yml up -d
-  - echo "wait for mysql is up: "
+  - echo 'wait for mysql is up:'
   - until ./tools/mysql-is-up.sh; do printf .; sleep 1; done;
 
 script:
