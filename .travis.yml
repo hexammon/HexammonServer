@@ -1,7 +1,11 @@
+sudo: true
+
 env:
   - "DOCKER_COMPOSE_VERSION=1.11.2"
 
 language: php
+php:
+  - 7.1
 
 services:
   - docker
