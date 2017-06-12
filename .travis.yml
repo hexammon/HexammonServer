@@ -1,20 +1,26 @@
 env:
   - "DOCKER_COMPOSE_VERSION=1.11.2"
 
+language: php
+
+services:
+  - docker
+
 matrix:
   allow_failures:
     - php: nightly
 
 before_install:
   - ./tools/prepare-local-config.sh
+  # update docker
   - sudo apt-get update
-  - curl -sSL https://get.docker.com/ | sudo sh
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker -v
   - docker-compose -v
-  - sudo usermod -aG docker ${USER}
 
 install:
   - ./tools/composer.sh install
