@@ -14,6 +14,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker -v
   - docker-compose -v
+  - sudo usermod -aG docker ${USER}
 
 install:
   - ./tools/composer.sh install
