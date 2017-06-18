@@ -12,15 +12,27 @@
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
-*/
+ */
 class ApiTester extends \Codeception\Actor
 {
     use _generated\ApiTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * Define custom actions here
+     */
+
+    public function getAuthKey(string $login, string $password): string
+    {
+        $this->sendPOST('/auth', [
+            'login' => $login,
+            'password' => $password
+        ]);
+        $location = $this->grabHttpHeader('Location');
+        $locationParts = explode('/', $location);
+
+        return array_pop($locationParts);
+    }
 }

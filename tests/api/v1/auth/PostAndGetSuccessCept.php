@@ -1,6 +1,7 @@
 <?php
 $I = new ApiTester($scenario);
 $I->wantToTest('user auth api');
+
 $I->sendPOST('/auth', [
     'login' => 'user',
     'password' => 'password'
