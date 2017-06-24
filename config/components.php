@@ -1,5 +1,7 @@
 <?php
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 use FreeElephants\Db\PdoReconnectWrapper;
 use FreeElephants\HexammonServer\Auth\AuthClientInterface;
 use FreeElephants\HexammonServer\Auth\Endpoint\DTO\DTOFactory;
@@ -19,7 +21,14 @@ $authClient = new FakeAuthClient([
     'test user' => 'test-user-auth-key',
 ]);
 
-
+$connection = \Doctrine\DBAL\DriverManager::getConnection([
+    'dbname' => 'hexammon',
+    'user' => 'hexammon',
+    'password' => 'hexammon_password',
+    'host' => 'db',
+    'driver' => 'pdo_mysql',
+]);
+$config = Setup::createAnnotationMetadataConfiguration([__DIR__ . '/../src']);
 return [
     'register' => [
         UserRepository::class,
@@ -35,5 +44,6 @@ return [
         AuthClientInterface::class => $authClient,
         PdoReconnectWrapper::class => new PdoReconnectWrapper('mysql:host=db;dbname=hexammon;charset=utf8',
             'hexammon', 'hexammon_password'),
+        EntityManager::class => EntityManager::create($connection, $config),
     ],
 ];

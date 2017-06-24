@@ -1,15 +1,11 @@
 <?php
 
-use FreeElephants\DI\Injector;
 use FreeElephants\HexammonServer\Channel\RoomsChannel;
 use FreeElephants\RestDaemon\RestServer;
 use FreeElephants\RestDaemon\RestServerBuilder;
 use Ratchet\App;
 
-require __DIR__ . '/../vendor/autoload.php';
-
-$components = require __DIR__ . '/../config/components.php';
-$di = (new \FreeElephants\DI\InjectorBuilder)->buildFromArray($components);
+$di = require __DIR__ . '/../bootstrap.php';
 
 $httpHost = $argv[1] ?? getenv('H6N_HOST') ?: '127.0.0.1';
 $port = $argv[2] ?? getenv('H6N_PORT') ?: 8080;
