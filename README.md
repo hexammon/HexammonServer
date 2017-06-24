@@ -27,11 +27,6 @@ See [documentation](./docs/INDEX.md) about [RESTful API resources](./docs/api/v1
 ```bash
 ./tools/prepare-local-config.sh
 docker-compose -f docker-compose.yml -f docker-compose-test.yml up -d
-docker exec server vendor/bin/codecept run
+./tools/codecept.sh run
 ```
-If you get next error on run codecept:
-```bash
-  [Codeception\Exception\ModuleException]
-  Db: SQLSTATE[HY000] [2002] Connection refused while creating PDO connection
-```
-Don't worry, it's ok - mysql server get long time on startup. Wait for it, and rerun tests. 
+Because server implement as daemon process, you need restart it every time after changes in code. `codecept.sh` script contain mysql server up waiting and server restarting before test suites executing. 

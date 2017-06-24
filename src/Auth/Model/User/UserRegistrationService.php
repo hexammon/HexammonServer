@@ -26,7 +26,10 @@ class UserRegistrationService
      */
     private $amqpClient;
 
-    public function __construct(PdoReconnectWrapper $pdoReconnectWrapper, UserRepository $userRepository/*, ApqpClientInterface $amqpClient*/)
+    public function __construct(
+        PdoReconnectWrapper $pdoReconnectWrapper,
+        UserRepository $userRepository/*, ApqpClientInterface $amqpClient*/
+    )
     {
         $this->pdoReconnectWrapper = $pdoReconnectWrapper;
         $this->userRepository = $userRepository;
@@ -57,7 +60,7 @@ class UserRegistrationService
             ':passwordHash' => $passwordHash,
             ':email' => $email
         ]);
-        if($PDO->commit()) {
+        if ($PDO->commit()) {
 //            $this->amqpClient->send(new BaseEvent('foo', 'bar'));
             return $this->userRepository->getUserByLogin($login);
         } else {

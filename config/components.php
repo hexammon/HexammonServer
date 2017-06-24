@@ -8,6 +8,7 @@ use FreeElephants\HexammonServer\Auth\Endpoint\DTO\DTOFactory;
 use FreeElephants\HexammonServer\Auth\FakeAuthClient;
 use FreeElephants\HexammonServer\Auth\Model\AuthKey\AuthKeyProviderInterface;
 use FreeElephants\HexammonServer\Auth\Model\AuthKey\UserAuthKeyProvider;
+use FreeElephants\HexammonServer\Auth\Model\User\User;
 use FreeElephants\HexammonServer\Auth\Model\User\UserRegistrationService;
 use FreeElephants\HexammonServer\Auth\Model\User\UserRepository;
 use FreeElephants\HexammonServer\Message\Client\ClientMessageFactory;
@@ -28,10 +29,10 @@ $connection = \Doctrine\DBAL\DriverManager::getConnection([
     'host' => 'db',
     'driver' => 'pdo_mysql',
 ]);
-$config = Setup::createAnnotationMetadataConfiguration([__DIR__ . '/../src']);
+$config = Setup::createAnnotationMetadataConfiguration([__DIR__ . '/../src'], true, null, null, false);
+$entityManager = EntityManager::create($connection, $config);
 return [
     'register' => [
-        UserRepository::class,
         UserRegistrationService::class,
         RoomRepository::class => RoomRepository::class,
         ClientMessageFactory::class => ClientMessageFactory::class,
@@ -44,6 +45,7 @@ return [
         AuthClientInterface::class => $authClient,
         PdoReconnectWrapper::class => new PdoReconnectWrapper('mysql:host=db;dbname=hexammon;charset=utf8',
             'hexammon', 'hexammon_password'),
-        EntityManager::class => EntityManager::create($connection, $config),
+        EntityManager::class => $entityManager,
+        UserRepository::class => $entityManager->getRepository(User::class),
     ],
 ];

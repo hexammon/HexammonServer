@@ -38,7 +38,7 @@ class GetUserByIdHandler extends AbstractHandler
         if ($this->authKeyProvider->isAuthKeyPresent($authKey)) {
             $processedResponse = $response->withStatus(200);
             $userId = $request->getAttribute('userId');
-            $user = $this->userRepository->getUserById($userId);
+            $user = $this->userRepository->find($userId);
             $processedResponse->getBody()->write($this->serializeEntity($user, $request));
         } else {
             $processedResponse = $response->withStatus(401);

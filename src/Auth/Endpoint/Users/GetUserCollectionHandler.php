@@ -37,7 +37,7 @@ class GetUserCollectionHandler extends AbstractHandler
         $authKey = $request->getHeaderLine('Authorization');
         if ($this->serviceAuthClient->isAuthKeyPresent($authKey)) {
             $newResponse = $response->withStatus(200);
-            $users = $this->userRepository->getAll();
+            $users = $this->userRepository->findAll();
             $newResponse->getBody()->write($this->serializeCollection($users, $request));
         } else {
             $newResponse = $response->withStatus(401);
