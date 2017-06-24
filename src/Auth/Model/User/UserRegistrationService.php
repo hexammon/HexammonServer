@@ -49,36 +49,21 @@ class UserRegistrationService
             $PDO->rollBack();
             throw new LoginOrEmailUsedException();
         }
-
-        $insertUserQuery = $PDO->prepare('INSERT INTO `user`
-          SET 
-            `login` = :login,
-            `password_hash` = :passwordHash,
-            `email` = :email');
-        $insertUserQuery->execute([
-            ':login' => $login,
-            ':passwordHash' => $passwordHash,
-            ':email' => $email
-        ]);
-        if ($PDO->commit()) {
-//            $this->amqpClient->send(new BaseEvent('foo', 'bar'));
-            return $this->userRepository->getUserByLogin($login);
-        } else {
-            throw new \RuntimeException($PDO->errorInfo(), $PDO->errorCode());
-        }
+        $user = new User();
+        $user->setLogin($login);
+        $user->setPasswordHash($passwordHash);
+        $user->setEmail($email);
+        $this->userRepository->save($user);
+        return $user;
     }
 
     private function isLoginOrEmailUsed(string $login, string $email): bool
     {
-        $checkIsLoginOrEmailQuery = $this->pdoReconnectWrapper->getConnection()->prepare('SELECT count(`id`) FROM `user`
-          WHERE
-          `login` = :login OR `email` = :email
-        ');
-        $checkIsLoginOrEmailQuery->execute([
-            ':login' => $login,
-            ':email' => $email
+        $user = $this->userRepository->findOneBy([
+            'login' => $login,
+            'email' => $email
         ]);
-        $numberOfUsers = (int)$checkIsLoginOrEmailQuery->fetchColumn();
-        return $numberOfUsers > 0;
+
+        return isset($user);
     }
 }

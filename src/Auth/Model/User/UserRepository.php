@@ -27,4 +27,10 @@ class UserRepository extends EntityRepository
             throw new UserNotFoundException();
         }
     }
+
+    public function save(User $user)
+    {
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+    }
 }

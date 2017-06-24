@@ -35,13 +35,6 @@ class User
      */
     private $passwordHash;
 
-    public function __construct($id, string $login, string $passwordHash)
-    {
-        $this->id = $id;
-        $this->login = $login;
-        $this->passwordHash = $passwordHash;
-    }
-
     public function getId()
     {
         return $this->id;
@@ -55,6 +48,21 @@ class User
     public function verifyPassword(string $password): bool
     {
         return password_verify($password, $this->passwordHash);
+    }
+
+    public function setLogin(string $login)
+    {
+        $this->login = $login;
+    }
+
+    public function setPasswordHash(string $passwordHash)
+    {
+        $this->passwordHash = $passwordHash;
+    }
+
+    public function setEmail(string $email)
+    {
+        $this->email = $email;
     }
 
 }
