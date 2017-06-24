@@ -12,7 +12,8 @@
         "free-elephants/rest-daemon": "0.5.0",
         "free-elephants/di": "1.2.0",
         "robmorgan/phinx": "0.8.0",
-        "symfony/serializer": "^3.3"
+        "symfony/serializer": "^3.3",
+        "doctrine/orm": "^2.5"
     },
     "require-dev": {
         "codeception/codeception": "^2.2",
