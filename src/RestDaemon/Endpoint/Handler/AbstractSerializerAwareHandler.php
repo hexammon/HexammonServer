@@ -2,7 +2,6 @@
 
 namespace FreeElephants\RestDaemon\Endpoint\Handler;
 
-use FreeElephants\RestDaemon\DTO\DTOFactoryInterface;
 use FreeElephants\RestDaemon\DTO\HalPaginatorDTOInterface;
 use FreeElephants\RestDaemon\Endpoint\AbstractEndpointMethodHandler;
 use FreeElephants\RestDaemon\Middleware\Collection\EndpointMiddlewareCollectionInterface;
@@ -21,15 +20,6 @@ abstract class AbstractSerializerAwareHandler extends AbstractEndpointMethodHand
      * @var SerializerInterface
      */
     private $serializer;
-    /**
-     * @var DTOFactoryInterface
-     */
-    private $dtoFactory;
-
-    public function setDTOFactory(DTOFactoryInterface $DTOFactory)
-    {
-        $this->dtoFactory = $DTOFactory;
-    }
 
     public function setSerializer(SerializerInterface $serializer)
     {

@@ -4,7 +4,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 use FreeElephants\Db\PdoReconnectWrapper;
 use FreeElephants\HexammonServer\Auth\AuthClientInterface;
-use FreeElephants\HexammonServer\Auth\Endpoint\DTO\DTOFactory;
 use FreeElephants\HexammonServer\Auth\FakeAuthClient;
 use FreeElephants\HexammonServer\Auth\Model\AuthKey\AuthKeyProviderInterface;
 use FreeElephants\HexammonServer\Auth\Model\AuthKey\UserAuthKeyProvider;
@@ -14,7 +13,6 @@ use FreeElephants\HexammonServer\Auth\Model\User\UserRepository;
 use FreeElephants\HexammonServer\Message\Client\ClientMessageFactory;
 use FreeElephants\HexammonServer\Model\Room\RoomRepository;
 use FreeElephants\HexoNards\Board\BoardBuilder;
-use FreeElephants\RestDaemon\DTO\DTOFactoryInterface;
 use FreeElephants\RestDaemon\Serialization\HalJsonSerializer;
 use FreeElephants\RestDaemon\Serialization\SerializerInterface;
 
@@ -38,7 +36,6 @@ return [
         ClientMessageFactory::class => ClientMessageFactory::class,
         BoardBuilder::class => BoardBuilder::class,
         AuthKeyProviderInterface::class => UserAuthKeyProvider::class,
-        DTOFactoryInterface::class => DTOFactory::class,
         SerializerInterface::class => HalJsonSerializer::class,
     ],
     'instances' => [
