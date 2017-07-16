@@ -15,7 +15,7 @@ use FreeElephants\HexammonServer\Message\Client\ClientMessageFactory;
 use FreeElephants\HexammonServer\Model\Room\RoomRepository;
 use FreeElephants\HexoNards\Board\BoardBuilder;
 use FreeElephants\RestDaemon\DTO\DTOFactoryInterface;
-use FreeElephants\RestDaemon\Serialization\JsonSerializer;
+use FreeElephants\RestDaemon\Serialization\HalJsonSerializer;
 use FreeElephants\RestDaemon\Serialization\SerializerInterface;
 
 $authClient = new FakeAuthClient([
@@ -39,7 +39,7 @@ return [
         BoardBuilder::class => BoardBuilder::class,
         AuthKeyProviderInterface::class => UserAuthKeyProvider::class,
         DTOFactoryInterface::class => DTOFactory::class,
-        SerializerInterface::class => JsonSerializer::class,
+        SerializerInterface::class => HalJsonSerializer::class,
     ],
     'instances' => [
         AuthClientInterface::class => $authClient,

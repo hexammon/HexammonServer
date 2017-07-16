@@ -3,12 +3,12 @@
 namespace FreeElephants\RestDaemon\Endpoint\Handler;
 
 use FreeElephants\RestDaemon\DTO\DTOFactoryInterface;
+use FreeElephants\RestDaemon\DTO\HalPaginatorDTOInterface;
 use FreeElephants\RestDaemon\Endpoint\AbstractEndpointMethodHandler;
 use FreeElephants\RestDaemon\Middleware\Collection\EndpointMiddlewareCollectionInterface;
 use FreeElephants\RestDaemon\Middleware\MiddlewareInterface;
 use FreeElephants\RestDaemon\Serialization\SerializerInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Uri;
+use NilPortugues\Api\Hal\HalPagination;
 
 /**
  * @author samizdam <samizdam@inbox.ru>
@@ -36,18 +36,23 @@ abstract class AbstractSerializerAwareHandler extends AbstractEndpointMethodHand
         $this->serializer = $serializer;
     }
 
-    public function serializeEntity($entity, ServerRequestInterface $request): string
+    public function serializeEntity($entity): string
     {
-        $baseModuleUri = new Uri($this->getBaseServerUri($request) . $this->getEndpoint()->getModule()->getPath());
-        $dto = $this->dtoFactory->createDTO($entity, $baseModuleUri);
-        return $this->serializer->serialize($dto);
+        return $this->serializer->serialize($entity);
     }
 
-    public function serializeCollection(array $entities, ServerRequestInterface $request): string
+    public function serializeCollection(iterable $entities, HalPaginatorDTOInterface $paginatorDTO): string
     {
-        $baseModuleUri = new Uri($this->getBaseServerUri($request) . $this->getEndpoint()->getModule()->getPath());
-        $dto = $this->dtoFactory->createCollection($entities, $baseModuleUri);
-        return $this->serializer->serialize($dto);
+        $page = new HalPagination();
+        $page->setTotal($paginatorDTO->getTotal());
+        $page->setCount(count($entities));
+        $page->setSelf($paginatorDTO->getBasePaginationLinkHref());
+        $page->setFirst($paginatorDTO->getBasePaginationLinkHref() . '?page=1');
+        $page->setPrev($paginatorDTO->getBasePaginationLinkHref() . '?page=1');
+        $page->setLast($paginatorDTO->getBasePaginationLinkHref() . '?page=1');
+        $page->setNext($paginatorDTO->getBasePaginationLinkHref() . '?page=1');
+        $page->setEmbedded(['users' => $entities]);
+        return $this->serializer->serialize($page);
     }
 
     public function addBeforeMiddleware(MiddlewareInterface $middleware)

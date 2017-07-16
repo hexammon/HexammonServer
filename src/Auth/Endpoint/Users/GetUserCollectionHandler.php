@@ -2,9 +2,12 @@
 
 namespace FreeElephants\HexammonServer\Auth\Endpoint\Users;
 
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use FreeElephants\HexammonServer\Auth\Endpoint\AbstractHandler;
 use FreeElephants\HexammonServer\Auth\Model\AuthKey\AuthKeyProviderInterface;
 use FreeElephants\HexammonServer\Auth\Model\User\UserRepository;
+use FreeElephants\RestDaemon\DTO\BaseHalPaginatorDTO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -37,8 +40,16 @@ class GetUserCollectionHandler extends AbstractHandler
         $authKey = $request->getHeaderLine('Authorization');
         if ($this->serviceAuthClient->isAuthKeyPresent($authKey)) {
             $newResponse = $response->withStatus(200);
-            $users = $this->userRepository->findAll();
-            $newResponse->getBody()->write($this->serializeCollection($users, $request));
+            $usersCollection = $this->userRepository->matching(new Criteria(null, null, null, 20));
+            $query = $this->userRepository->createNamedQuery('active');
+//            ->setFirstResult(0)->setMaxResults(20);
+            $paginator = new Paginator($query);
+            $total = $paginator->count();
+            $numberOfPages = ceil($total / 20);
+            $currentPageNumber = 1;
+            $offset = (int) (20 / ($currentPageNumber - 1));
+            $paginator->getQuery()->setMaxResults(20)->setFirstResult($offset);
+            $newResponse->getBody()->write($this->serializeCollection($paginator->getQuery()->getResult(), new BaseHalPaginatorDTO('/api/v1/users', $total, 20, $offset)));
         } else {
             $newResponse = $response->withStatus(401);
         }

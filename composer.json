@@ -13,7 +13,8 @@
         "free-elephants/di": "1.2.0",
         "symfony/serializer": "^3.3",
         "doctrine/orm": "^2.5",
-        "psr/link": "^1.0"
+        "psr/link": "^1.0",
+        "nilportugues/hal": "^2.1"
     },
     "require-dev": {
         "codeception/codeception": "^2.2",

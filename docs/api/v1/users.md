@@ -20,9 +20,16 @@ Error cases (TODO write test for this cases):
 Request: `GET /api/v1/users`
 Service Authorization is required. 
 Response: 
-```
+```json
 {
-    "items": <User>[]
+    "_links": {
+        "self": {
+            "href": "https://hexammon.net/api/v1/users"
+        }
+    },
+    "_embedded": {
+        "users": <User>[]
+    }
 }
 ```
 

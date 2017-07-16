@@ -39,7 +39,7 @@ class GetUserByIdHandler extends AbstractHandler
             $processedResponse = $response->withStatus(200);
             $userId = $request->getAttribute('userId');
             $user = $this->userRepository->find($userId);
-            $processedResponse->getBody()->write($this->serializeEntity($user, $request));
+            $processedResponse->getBody()->write($this->serializeEntity($user));
         } else {
             $processedResponse = $response->withStatus(401);
         }
