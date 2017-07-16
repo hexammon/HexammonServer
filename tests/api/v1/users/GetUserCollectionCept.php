@@ -16,9 +16,14 @@ $I->seeResponseContainsJson([
         ]
     ],
     '_embedded' => [
-        // TODO after https://github.com/nilportugues/php-hal/issues/11
         'users' => [
             [
+                // TODO after https://github.com/nilportugues/php-hal/issues/11
+//                '_links' => [
+//                    'self' => [
+//                        'href' => '/api/v1/users/1'
+//                    ],
+//                ],
                 'id' => 1,
                 'login' => 'user'
             ],

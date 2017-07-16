@@ -40,12 +40,10 @@ class GetUserCollectionHandler extends AbstractHandler
         $authKey = $request->getHeaderLine('Authorization');
         if ($this->serviceAuthClient->isAuthKeyPresent($authKey)) {
             $newResponse = $response->withStatus(200);
-            $usersCollection = $this->userRepository->matching(new Criteria(null, null, null, 20));
+            $this->userRepository->matching(new Criteria(null, null, null, 20));
             $query = $this->userRepository->createNamedQuery('active');
-//            ->setFirstResult(0)->setMaxResults(20);
             $paginator = new Paginator($query);
             $total = $paginator->count();
-            $numberOfPages = ceil($total / 20);
             $currentPageNumber = 1;
             $offset = (int) (20 / ($currentPageNumber - 1));
             $paginator->getQuery()->setMaxResults(20)->setFirstResult($offset);
