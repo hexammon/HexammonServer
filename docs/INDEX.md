@@ -1,8 +1,8 @@
 # Hexammon Server Documentation
 
 Game Server implementation consists of 2 parts: 
-- [Web-socket server](./wss/v1/INDEX.md) for game events and players interaction: useful in all event-driven cases.
-- [REST API](./api/v1/INDEX.md) for receiving data (like statistic) and authorization: useful in data-driven cases and request-response logic. 
+- [WAMP router](./wamp/v1/INDEX.md) for game events and players interaction: useful in all event-driven cases.
+- [REST API](./api/v1/INDEX.md) for receiving data (like statistic): useful in data-driven cases and request-response logic. 
 
 ## Common Object Types used in both API's
 

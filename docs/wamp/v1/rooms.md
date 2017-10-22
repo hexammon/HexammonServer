@@ -1,6 +1,6 @@
 # `/rooms`
 
-This channel provide events about new games.   
+This topic provide events about new games.   
 
 ## Client messages: 
 
