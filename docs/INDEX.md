@@ -16,7 +16,7 @@ Scalar values and complex objects present in current documentation in "<angle br
 
 ```json
 {
-    "id": "<int>",
+    "id": "<uuid>",
     "login": "<string>"
 }
 ```
@@ -27,23 +27,27 @@ Player - it's User in game context. One User will be present as new Player in ev
 ```json
 {
     "user": "<User>",
-    "color": "#FFFFFF", // HTML RGB color of player pieces in game 
+    "color": "#FFFFFF" // HTML RGB color of player pieces in game 
 }
 ```
 
+### <Board>
+
+```json
+{
+    "type": "(hex|square)",
+    "numberOfRows": 8,
+    "numberOfColumns": 8
+}
+```
 ### <Room>
 Room it's Game before start, when Users can join it as Players. Room close when all players assembled. 
   
 ```json
 {
-    "id": "<roomId>",
-    "channel": "/wss/v1/rooms/<roomId>",
+    "uuid": "<uuid>",
     "numberOfPlayers": 2,
-    "boardConfig": {
-        "type": "<hex|square>",
-        "numberOfRows": 8,
-        "numberOfColumns": 8
-    },
+    "boardConfig": "<BoardConfig>",
     "players": "<Player>[]"    // list of connected players
 }
 ```

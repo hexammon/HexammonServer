@@ -8,8 +8,8 @@ URI for connection with WAMP-router is `/wamp/v1`. All resources begin with `net
  
 WAMP API provide two roles: 
  
-- Player (client from web-frontent: subscriber and callee)
-- Game Server (client from backent, publisher and caller)
+- Player (client from web-frontend: subscriber and callee)
+- Game Server (client from backend, publisher and caller)
 
 Every player action it is call of some RPC. Every call is delivered to Game Server. After authorization checking and processing with business-login, Game Server send result to callee-player and publish triggered events with board updates to all subscribed clients. 
      
@@ -21,11 +21,44 @@ For example:
 
 Router provide next topics and RPC's:
 
-## RPC's 
-- Get list of players
-- Get list of rooms
-- Get list of games
+## RPC and Channels by Workflow 
 
-## Topics
-- [rooms topic](./rooms.md)
-- [game topic](./game.md)
+### Get List of Open Rooms
+
+### Request (RPC)
+`net.hexammon.rooms`
+
+#### Response
+
+```json
+[
+    {
+        "uuid": "<uuid>",
+        "boardConfig": "<Board>",
+        "players": "<Player>[]"
+    }
+]
+```
+
+### Join to the Room
+
+`net.hexammon.rooms.join, [<uuid>]`
+
+#### Response
+
+On success
+```json
+{
+    "gameTopic": "net.hexammon.games.<gameUuid>"
+}
+```
+
+On failure
+```json
+{
+    "error": {
+        "code": "<int>",
+        "reason": "Message with description. "
+    }
+}
+```
