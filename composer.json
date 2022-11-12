@@ -8,12 +8,11 @@
         }
     ],
     "require": {
-        "free-elephants/hexo-nards": "1.0.0-alpha",
-        "cboden/ratchet": "^0.3.6",
-        "free-elephants/di": "1.0.0"
+        "free-elephants/di": "1.0.0",
+        "hexammon/hexo-nards": "1.0.0-beta"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.7",
+        "phpunit/phpunit": "^9",
         "ratchet/pawl": "^0.2.3"
     },
     "repositories": [
