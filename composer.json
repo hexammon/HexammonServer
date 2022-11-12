@@ -9,11 +9,11 @@
     ],
     "require": {
         "free-elephants/di": "1.0.0",
-        "hexammon/hexo-nards": "1.0.0-beta"
+        "hexammon/hexo-nards": "1.0.0-beta",
+        "voryx/thruway": "^0.6.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9",
-        "ratchet/pawl": "^0.2.3"
+        "phpunit/phpunit": "^9"
     },
     "repositories": [
         {
