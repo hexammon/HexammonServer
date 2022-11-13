@@ -1,7 +1,9 @@
 <?php
 
 use FreeElephants\DI\InjectorBuilder;
+use Hexammon\Server\Application\Console\CreateRoom;
 use Hexammon\Server\Application\Console\RunRouter;
+use Hexammon\Server\Application\Console\RunWampServer;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 
@@ -15,6 +17,8 @@ $di->allowInstantiateNotRegisteredTypes(true);
 
 $commands = [
     'router:run' => RunRouter::class,
+    'server:run' => RunWampServer::class,
+    'room:create' => CreateRoom::class,
 ];
 foreach ($commands as $commandName => $commandClass) {
     /**@var Command $command */

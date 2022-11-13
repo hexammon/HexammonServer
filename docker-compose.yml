@@ -1,0 +1,22 @@
+version: "3.6"
+
+services:
+  wamp-router:
+    image: ${PHP_DEV_IMAGE}:${REVISION}
+    volumes:
+      - ./bin/:/var/www/bin/:ro
+      - ./config/:/var/www/config/:ro
+      - ./src:/var/www/src/:ro
+      - ./vendor/:/var/www/vendor/:ro
+    working_dir: /var/www/
+    command: "php ./bin/server.php router:run"
+    ports:
+      - "9090:9090"
+#    networks:
+#      - ${COMPOSE_NETWORK}
+
+networks:
+  default:
+    name: ${COMPOSE_NETWORK}
+
+

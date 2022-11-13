@@ -4,9 +4,16 @@ source .env
 
 test -t 1 && USE_TTY="--tty"
 
+if $(docker network ls | grep -q ${COMPOSE_NETWORK}); then
+  # some CI tools require connection to sql container
+  # if docker-compose project with it network is up, connect containers via network
+  USE_NETWORK="--network ${COMPOSE_NETWORK}"
+fi
+
 docker run --rm --interactive ${USE_TTY} \
     --init \
     --user `id -u`:`id -g` \
     --volume $PWD:/var/www \
     --env-file .env \
+    ${USE_NETWORK} \
     ${PHP_DEV_IMAGE}:${REVISION} php "$@"
