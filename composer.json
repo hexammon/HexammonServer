@@ -23,12 +23,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "FreeElephants\\HexoNardsGameServer\\": "src/"
+            "Hexammon\\Server\\": "src/Hexammon/Server/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "FreeElephants\\HexoNardsGameServerTests\\": "tests/"
+            "Hexammon\\Server\\": "tests/Hexammon/Server/"
         }
     }
 }
