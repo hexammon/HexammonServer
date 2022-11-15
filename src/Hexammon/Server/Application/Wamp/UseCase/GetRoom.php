@@ -5,10 +5,10 @@ namespace Hexammon\Server\Application\Wamp\UseCase;
 
 use Hexammon\Server\Domain\Room\RoomRepositoryInterface;
 use Hexammon\Server\Infrastructure\Mapper\RoomMapper;
+use Ramsey\Uuid\Uuid;
 
-class FetchRooms
+class GetRoom
 {
-
     private RoomRepositoryInterface $roomRepository;
     private RoomMapper $mapper;
 
@@ -18,9 +18,10 @@ class FetchRooms
         $this->mapper = $mapper;
     }
 
-    public function __invoke(): array
+    public function __invoke(array $args)
     {
-        $rooms = $this->roomRepository->getAll();
-        return $this->mapper->mapCollection($rooms);
+        $roomId = Uuid::fromString($args[0]);
+        $room = $this->roomRepository->getRoomById($roomId);
+        return $this->mapper->mapSingle($room);
     }
 }

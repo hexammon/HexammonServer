@@ -6,6 +6,7 @@ namespace Hexammon\Server\Application\Console;
 
 use Hexammon\Server\Application\Wamp\UseCase\CreateRoom;
 use Hexammon\Server\Application\Wamp\UseCase\FetchRooms;
+use Hexammon\Server\Application\Wamp\UseCase\GetRoom;
 use Hexammon\Server\Application\Wamp\UseCase\RegisterUser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,13 +21,21 @@ class RunWampServer extends Command
     private RegisterUser $registerUser;
     private ClientInterface $client;
     private FetchRooms $fetchRooms;
+    private GetRoom $getRoom;
 
-    public function __construct(RegisterUser $registerUser, CreateRoom $createRoom, FetchRooms $fetchRooms, ClientInterface $client)
+    public function __construct(
+        RegisterUser    $registerUser,
+        CreateRoom      $createRoom,
+        FetchRooms      $fetchRooms,
+        ClientInterface $client,
+        GetRoom         $getRoom
+    )
     {
         $this->createRoom = $createRoom;
         $this->registerUser = $registerUser;
         $this->fetchRooms = $fetchRooms;
         $this->client = $client;
+        $this->getRoom = $getRoom;
         parent::__construct();
     }
 
@@ -38,6 +47,8 @@ class RunWampServer extends Command
             $session->register('net.hexammon.create_room', $this->createRoom);
 
             $session->register('net.hexammon.get_rooms', $this->fetchRooms);
+
+            $session->register('net.hexammon.get_room', $this->getRoom);
         });
 
         $this->client->start();

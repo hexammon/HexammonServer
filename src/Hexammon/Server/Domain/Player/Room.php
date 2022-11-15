@@ -16,7 +16,7 @@ class Room
     private UuidInterface $uuid;
     private \DateTimeInterface $createdAt;
 
-    public function __construct(UuidInterface $uuid, string $name, PlayerInterface $creator, int $numberOfPlayers = 2)
+    public function __construct(UuidInterface $uuid, string $name, NamedPlayer $creator, int $numberOfPlayers = 2)
     {
         $this->uuid = $uuid;
         $this->name = $name;
@@ -46,7 +46,7 @@ class Room
         return $this->name;
     }
 
-    public function getCreator(): PlayerInterface
+    public function getCreator(): NamedPlayer
     {
         return $this->creator;
     }

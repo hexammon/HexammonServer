@@ -6,6 +6,7 @@ namespace Hexammon\Server\Infrastructure\Repository;
 
 use Hexammon\Server\Domain\Player\Room;
 use Hexammon\Server\Domain\Room\RoomRepositoryInterface;
+use Ramsey\Uuid\UuidInterface;
 
 class RoomRepository implements RoomRepositoryInterface
 {
@@ -19,5 +20,10 @@ class RoomRepository implements RoomRepositoryInterface
     public function getAll(): array
     {
         return array_values($this->rooms);
+    }
+
+    public function getRoomById(UuidInterface $roomId): Room
+    {
+        return $this->rooms[$roomId->toString()];
     }
 }
