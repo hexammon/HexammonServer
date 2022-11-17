@@ -8,6 +8,7 @@ use Hexammon\Server\Domain\Player\PlayerRepositoryInterface;
 use Hexammon\Server\Domain\Player\Room;
 use Hexammon\Server\Domain\Room\RoomRepositoryInterface;
 use Hexammon\Server\Infrastructure\Wamp\SessionProvider;
+use Hexammon\Server\Infrastructure\Wamp\TopicNamesBuilder;
 use Ramsey\Uuid\Uuid;
 
 class CreateRoom
@@ -15,12 +16,19 @@ class CreateRoom
     private PlayerRepositoryInterface $playerRepository;
     private RoomRepositoryInterface $roomRepository;
     private SessionProvider $sessionProvider;
+    private TopicNamesBuilder $topicNamesBuilder;
 
-    public function __construct(PlayerRepositoryInterface $playerRepository, RoomRepositoryInterface $roomRepository, SessionProvider $sessionProvider)
+    public function __construct(
+        PlayerRepositoryInterface $playerRepository,
+        RoomRepositoryInterface   $roomRepository,
+        SessionProvider           $sessionProvider,
+        TopicNamesBuilder         $topicNamesBuilder
+    )
     {
         $this->playerRepository = $playerRepository;
         $this->roomRepository = $roomRepository;
         $this->sessionProvider = $sessionProvider;
+        $this->topicNamesBuilder = $topicNamesBuilder;
     }
 
     public function __invoke(array $args)
@@ -33,7 +41,7 @@ class CreateRoom
 
         $this->roomRepository->addRoom($room);
 
-        $roomTopic = sprintf('net.hexammon.rooms.%s', str_replace('-', '_', $roomId->toString()));
+        $roomTopic = $this->topicNamesBuilder->getRoomTopicName($room);
         $session = $this->sessionProvider->getClientSession();
         $session->subscribe($roomTopic, function (array $args, array $argsKw) {
             var_dump(['args', $args]);
@@ -43,8 +51,7 @@ class CreateRoom
         });
         $session->publish($roomTopic, [], ['event' => 'roomCreated']);
 
-        $roomsTopic = 'net.hexammon.rooms';
-        $session->publish($roomsTopic, [], ['type' => 'roomCreated', 'id' => $roomId->toString()]);
+        $session->publish(TopicNamesBuilder::ROOMS_TOPIC, [], ['type' => 'roomCreated', 'id' => $roomId->toString()]);
 
         return $roomTopic;
 

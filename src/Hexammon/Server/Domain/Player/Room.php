@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Hexammon\Server\Domain\Player;
 
+use Hexammon\HexoNards\Board\Board;
+use Hexammon\HexoNards\Board\BoardBuilder;
+use Hexammon\HexoNards\Game\Game;
 use Hexammon\HexoNards\Game\PlayerInterface;
+use Hexammon\Server\Domain\Player\Exception\GameNotStarted;
 use Ramsey\Uuid\UuidInterface;
 
 class Room
@@ -15,6 +19,7 @@ class Room
     private array $players = [];
     private UuidInterface $uuid;
     private \DateTimeInterface $createdAt;
+    private Game $game;
 
     public function __construct(UuidInterface $uuid, string $name, NamedPlayer $creator, int $numberOfPlayers = 2)
     {
@@ -64,5 +69,27 @@ class Room
     public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
+    }
+
+    public function getPlayers(): array
+    {
+        return $this->players;
+    }
+
+    public function initGame(): Game
+    {
+        $board = (new BoardBuilder())->build(Board::TYPE_SQUARE, 4, 4);
+        $this->game = new Game($this->getPlayers(), $board);
+
+        return $this->game;
+    }
+
+    public function getGame(): Game
+    {
+        if (isset($this->game)) {
+            return $this->game;
+        }
+
+        throw new GameNotStarted();
     }
 }
