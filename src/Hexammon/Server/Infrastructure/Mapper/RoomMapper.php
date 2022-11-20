@@ -138,7 +138,7 @@ class RoomMapper
             ];
         }
 
-        return $includedGame;
+        return [$includedGame];
 
     }
 

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Hexammon\Server\Application\Wamp\UseCase;
 
-use Hexammon\HexoNards\Board\Board;
-use Hexammon\HexoNards\Board\BoardBuilder;
-use Hexammon\HexoNards\Game\Game;
 use Hexammon\Server\Domain\Player\PlayerRepositoryInterface;
 use Hexammon\Server\Domain\Room\RoomRepositoryInterface;
 use Hexammon\Server\Infrastructure\Mapper\RoomMapper;
@@ -56,6 +53,8 @@ class JoinRoom
             $roomTopic = $this->topicNamesBuilder->getRoomTopicName($room);
             $this->sessionProvider->getClientSession()->publish($roomTopic, $this->roomMapper->mapSingle($room));
         }
+
+        return $this->roomMapper->mapSingle($room);
     }
 
 }
